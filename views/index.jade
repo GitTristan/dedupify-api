@@ -2,4 +2,12 @@ extends layout
 
 block content
   h1= title
-
+  p Use Postman (or similar) to place a POST call to https://dedupify-email-api.herokuapp.com/
+  p
+  p This will kick of a job that generates 100,000 email addresses with 50% duplicate rate.
+  p
+  p 200 response will return you the time it took the function to execute, the deduped list count, and the deduped email list in Array form.
+  p
+  p 400 response will return if the system encountered an error while executing
+  p
+  p Thanks for taking this for a spin, -Tristan

@@ -1,16 +1,14 @@
-var runDeDupe = require('../deduper');
-var randomEmailGenerator = require('../randomEmailGenerator');
+var runDeDupe = require('./deduper');
+var randomEmailGenerator = require('./randomEmailGenerator');
 var now = require("performance-now");
 
-
-describe("Email dupe checker", function() {
-
+var runGenAndDeDupe = function (callback) {
     randomEmailGenerator(function(err, array){
         if(err){
             console.log(err)
         } else {
             var start = now();
-            var dupes = true;
+            var hasDupes = true;
 
             runDeDupe(array, function (err, data) {
                 if(err){
@@ -24,14 +22,10 @@ describe("Email dupe checker", function() {
                     console.log(explainStr);
 
                     if(hasDuplicates(data) == false){
-                        dupes = false
+                        hasDupes = false
                     }
 
-                    it("contains no dupes", function() {
-
-                        expect(dupes).toBe(false);
-
-                    });
+                    callback(null, hasDupes, explainStr, data)
 
                 }
 
@@ -39,8 +33,10 @@ describe("Email dupe checker", function() {
         }
     })
 
+};
 
-});
+module.exports = runGenAndDeDupe;
+
 
 function hasDuplicates(array) {
     return (new Set(array)).size !== array.length;
